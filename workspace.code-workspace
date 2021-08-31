@@ -1,0 +1,10 @@
+{
+    "folders": [
+        {
+            "path": "."
+        }
+    ],
+    "settings": {
+        "python.pythonPath": "/Users/gabrielgilling/.pyenv/versions/3.7.8/envs/venv378/bin/python"
+    }
+}
