@@ -85,6 +85,9 @@ marginals <- distinct(marginals)
 marginals$macron_freq_a <- with(marginals, freq_a * macron_pct_a / pop_region)
 marginals$macron_freq_g <- with(marginals, freq_g * macron_pct_g / pop_region)
 
+marginals$macron_raw_a <- with(marginals, freq_a * macron_pct_a)
+marginals$macron_raw_g <- with(marginals, freq_g * macron_pct_g)
+
 ## first round results
 french_elections_2017_first_round <- read_csv("Documents/french_elections_2017_first_round.csv")
 french_elections_2017_first_round <- french_elections_2017_first_round[c(1,grep("_pct", names(french_elections_2017_first_round)))]
@@ -99,7 +102,11 @@ fr2017[, 2:ncol(fr2017)] <- apply(fr2017[, 2:ncol(fr2017)], MARGIN = 2, as.numer
 
 marginals_results <- merge(marginals, fr2017, by = "region_new")
 
-fit_macron2017 <- stan_glm(data = marginals_results, macron_pct ~ macron_freq_a + macron_freq_g)
+fit_macron2017 <- stan_glm(data = marginals_results, macron_pct ~ macron_raw_a + macron_raw_g)
+
+summary(lm(data = marginals_results, macron_pct ~ macron_raw_a + macron_raw_g))
+
+plot(fit_macron2017)
 
 fit_macron2017_glmer <- stan_glmer(data = marginals_results, macron_pct ~ macron_freq_a + macron_freq_g + (1|region_new))
 plot(fit_macron2017_glmer, digits = 3)
