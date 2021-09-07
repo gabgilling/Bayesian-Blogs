@@ -104,7 +104,7 @@ marginals_results <- merge(marginals, fr2017, by = "region_new")
 
 fit_macron2017 <- stan_glm(data = marginals_results, macron_pct ~ macron_raw_a + macron_raw_g)
 
-summary(lm(data = marginals_results, macron_pct ~ macron_raw_a + macron_raw_g))
+summary(lm(data = marginals_results, macron_pct ~ macron_pct_a + macron_pct_g))
 
 plot(fit_macron2017)
 
